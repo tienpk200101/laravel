@@ -19,7 +19,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -61,6 +61,7 @@ class ProductRequest extends FormRequest
         });
     }
 
+    //Chạy lệnh trước khi xác thực
     public function prepareForValidation() {
         $this->merge([
             'create_at' => date('Y-m-d H:i:s'),

@@ -10,6 +10,8 @@ use App\Http\Requests\ProductRequest;
 
 use Illuminate\Support\Facades\Validator;
 
+use App\Rules\Uppercase;
+
 
 class HomeController extends Controller
 {
@@ -33,45 +35,60 @@ class HomeController extends Controller
         return view('clients.add', $this->data);
     }
 
-    public function postAdd(Request $request) {
+    public function postAdd(ProductRequest $request) {
+        
+        // $rules = [
+        //     'product_name' => ['required', 'min:6', function($attributes, $value, $fail){
+        //         isUpperCase($value, 'Trường :attribute không hợp lệ ', $fail);
+        //     }],
+        //     'product_price' => ['required','integer']
+        // ];
 
         $rules = [
-            'product_name' => 'required|min:6',
-            'product_price' => 'required|integer'
+            'product_name' => ['required', 'min:6'],
+            'product_price' => ['required','integer']
         ];
 
         $message = [
-            'product_name.required' => ':attribute bắt buộc phải nhập',
-            'product_name.min' => ':attribute không được ít hơn :min ký tự',
-            'product_price.required' => ':attribute bắt buộc phải nhập',
-            'product_price.integer' => ':attribute phải là số',
+            'required' => 'Trường :attribute bắt buộc phải nhập',
+            'min' => 'Trường :attribute không được nhỏ hơn :min ký tự',
+            'integer' => 'Trường :attribute phải là sô'
         ];
+
+        // $message = [
+        //     'product_name.required' => ':attribute bắt buộc phải nhập',
+        //     'product_name.min' => ':attribute không được ít hơn :min ký tự',
+        //     'product_price.required' => ':attribute bắt buộc phải nhập',
+        //     'product_price.integer' => ':attribute phải là số',
+        // ];
 
         $attributes = [
             'product_name' => 'Tên sản phẩm',
             'product_price' => 'Giá sản phẩm'
         ];
 
-        $validator = Validator::make($request->all(), $rules, $message, $attributes);
+        // $validator = Validator::make($request->all(), $rules, $message, $attributes);
 
-        $validator->validate();
+        // $validator->validate();
 
-        if ($validator->fails()) {
-            $validator->errors()->add('msg', 'Vui lòng kiểm tra lại dữ liệu');
-            // return 'Validate thất bại';
-        } else {
-            // return 'Validate thành công';
-            return redirect()->route('product')->with('msg', 'Validate thành công');
-        }
+        // $request->validate($rules, $message);
 
-        return back()->withErrors($validator);
+        return response()->json(['status' => 'success']);
+
+        // $validator->validate();
+
+        // if ($validator->fails()) {
+        //     $validator->errors()->add('msg', 'Vui lòng kiểm tra lại dữ liệu');
+        //     // return 'Validate thất bại';
+        // } else {
+        //     // return 'Validate thành công';
+        //     return redirect()->route('product')->with('msg', 'Validate thành công');
+        // }
+
+        // return back()->withErrors($validator);
         
 
-        // $message = [
-        //     'required' => 'Trường :attribute bắt buộc phải nhập',
-        //     'min' => 'Trường :attribute không được nhỏ hơn :min ký tự',
-        //     'integer' => 'Trường :attribute phải là sô'
-        // ];
+        
 
         // $request->validate($rules, $message);
 
@@ -102,4 +119,11 @@ class HomeController extends Controller
             return response()->download($image, $flieName);
         }
     }
+
+    // public function isUpperCase($value, $message, $fail) {
+    //     if($value != mb_strtoupper($value, 'UTF-8')) {
+    //         //Xảy ra lỗi
+    //         $fail($message);
+    //     }
+    // }
 }
