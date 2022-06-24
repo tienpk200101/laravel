@@ -10,10 +10,10 @@
 
 @section('content')
 <section>
-    <div class="container">
-        <h1>Sản phẩm</h1>
-    </div>
-    <x-package-alert/>
+    @if (session('msg'))
+        <div class="alert alert-success">{{session('msg')}}</div>
+    @endif
+    <h1>Sản phẩm</h1>
 
 </section>
 @endsection
