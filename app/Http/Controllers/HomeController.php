@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Rules\Uppercase;
 
-// use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
-use DB;
+// use DB;
 class HomeController extends Controller
 {
     public $data = [];
