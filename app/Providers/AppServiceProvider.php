@@ -55,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::component('package-alert', Alert::class);
 
-        // Blade::component('button', Button::class);
+        Blade::component('button', Button::class);
 
         // Blade::component('forms-button', FormButton::class);
 

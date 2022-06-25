@@ -6,7 +6,7 @@ use App\Http\Controllers\MyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
- 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Response;
 
 /*
@@ -23,7 +23,9 @@ use Illuminate\Http\Response;
 // Client Route
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('san-pham', [HomeController::class, 'products'])->name('product');
+
 Route::get('them-san-pham', [HomeController::class, 'getAdd']);
 
 Route::post('them-san-pham', [HomeController::class, 'postAdd'])->name('post-add');
@@ -46,4 +48,8 @@ Route::get('download-image', [HomeController::class, 'downloadImage'])->name('do
 
 Route::get('cookie', function(){
     return (new Response('Hello world', 200))->cookie('name', 'tien', 1);
+});
+
+Route::prefix('users')->group(function(){
+    Route::get('/', [UserController::class, 'index']);
 });
